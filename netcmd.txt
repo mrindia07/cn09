@@ -1,0 +1,201 @@
+#/bin/bash
+c502@comp:~$ ifconfig
+ens33     Link encap:Ethernet  HWaddr 90:fb:a6:07:32:d3  
+          inet addr:192.168.5.24  Bcast:192.168.5.255  Mask:255.255.255.0
+          inet6 addr: fe80::1094:89e9:6de9:f57/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:10849 errors:0 dropped:9 overruns:0 frame:0
+          TX packets:5048 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:9186178 (9.1 MB)  TX bytes:479440 (479.4 KB)
+          Interrupt:17 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:833 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:833 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:69956 (69.9 KB)  TX bytes:69956 (69.9 KB)
+
+c502@comp:~$ netstat
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 192.168.5.24:43232      bom07s01-in-f3.1e:https ESTABLISHED
+tcp        0      0 192.168.5.24:42080      bom07s01-in-f14.1:https ESTABLISHED
+tcp        0      0 192.168.5.24:43660      sc-in-f189.1e100.:https ESTABLISHED
+tcp        0      0 192.168.5.24:57596      bom07s11-in-f13.1:https ESTABLISHED
+tcp        0      0 192.168.5.24:47028      192.168.3.5:8090        ESTABLISHED
+tcp        0      0 192.168.5.24:45200      ec2-54-191-18-238:https ESTABLISHED
+tcp        0      0 192.168.5.24:43238      bom07s01-in-f3.1e:https ESTABLISHED
+tcp        0      0 192.168.5.24:39188      bom05s10-in-f132.:https TIME_WAIT  
+tcp        0      0 192.168.5.24:56236      ams15s21-in-f131.:https ESTABLISHED
+tcp        0      0 192.168.5.24:40754      bom07s01-in-f4.1e:https ESTABLISHED
+tcp        0      0 192.168.5.24:47180      192.168.3.5:8090        ESTABLISHED
+tcp        0      0 192.168.5.24:42216      bom07s01-in-f14.1:https ESTABLISHED
+tcp        0      0 192.168.5.24:42832      ams15s21-in-f14.1:https ESTABLISHED
+tcp        0      0 192.168.5.24:35226      a96-17-180-115.dep:http ESTABLISHED
+tcp        0      0 192.168.5.24:57748      bom05s08-in-f165.:https TIME_WAIT  
+tcp        0      0 192.168.5.24:43086      bom07s12-in-f1.1e:https ESTABLISHED
+Active UNIX domain sockets (w/o servers)
+Proto RefCnt Flags       Type       State         I-Node   Path
+unix  2      [ ]         DGRAM                    22044    /run/user/1000/systemd/notify
+unix  2      [ ]         DGRAM                    9347     /run/systemd/journal/syslog
+unix  7      [ ]         DGRAM                    9352     /run/systemd/journal/socket
+unix  16     [ ]         DGRAM                    9354     /run/systemd/journal/dev-log
+unix  3      [ ]         DGRAM                    10611    /run/systemd/notify
+unix  3      [ ]         STREAM     CONNECTED     24051    /run/systemd/journal/stdout
+unix  3      [ ]         STREAM     CONNECTED     23143    @/tmp/dbus-wABhfX3sTz
+
+c502@comp:~$ hostname
+comp
+c502@comp:~$ ping
+Usage: ping [-aAbBdDfhLnOqrRUvV] [-c count] [-i interval] [-I interface]
+            [-m mark] [-M pmtudisc_option] [-l preload] [-p pattern] [-Q tos]
+            [-s packetsize] [-S sndbuf] [-t ttl] [-T timestamp_option]
+            [-w deadline] [-W timeout] [hop1 ...] destination
+
+c502@comp:~$ route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         192.168.5.1     0.0.0.0         UG    100    0        0 ens33
+link-local      *               255.255.0.0     U     1000   0        0 ens33
+192.168.5.0     *               255.255.255.0   U     100    0        0 ens33
+
+c502@comp:~$ sudo ifup
+[sudo] password for c502: 
+ifup: no interface(s) specified
+ifup: Use --help for help
+
+c502@comp:~$ ping 192.168.5.24
+PING 192.168.5.24 (192.168.5.24) 56(84) bytes of data.
+64 bytes from 192.168.5.24: icmp_seq=1 ttl=64 time=0.051 ms
+64 bytes from 192.168.5.24: icmp_seq=2 ttl=64 time=0.036 ms
+64 bytes from 192.168.5.24: icmp_seq=3 ttl=64 time=0.034 ms
+64 bytes from 192.168.5.24: icmp_seq=4 ttl=64 time=0.035 ms
+64 bytes from 192.168.5.24: icmp_seq=5 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=6 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=7 ttl=64 time=0.037 ms
+64 bytes from 192.168.5.24: icmp_seq=8 ttl=64 time=0.037 ms
+64 bytes from 192.168.5.24: icmp_seq=9 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=10 ttl=64 time=0.043 ms
+64 bytes from 192.168.5.24: icmp_seq=11 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=12 ttl=64 time=0.036 ms
+64 bytes from 192.168.5.24: icmp_seq=13 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=14 ttl=64 time=0.037 ms
+64 bytes from 192.168.5.24: icmp_seq=15 ttl=64 time=0.039 ms
+64 bytes from 192.168.5.24: icmp_seq=16 ttl=64 time=0.043 ms
+64 bytes from 192.168.5.24: icmp_seq=17 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=18 ttl=64 time=0.039 ms
+64 bytes from 192.168.5.24: icmp_seq=19 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=20 ttl=64 time=0.039 ms
+64 bytes from 192.168.5.24: icmp_seq=21 ttl=64 time=0.034 ms
+64 bytes from 192.168.5.24: icmp_seq=22 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=23 ttl=64 time=0.040 ms
+64 bytes from 192.168.5.24: icmp_seq=24 ttl=64 time=0.041 ms
+64 bytes from 192.168.5.24: icmp_seq=25 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=26 ttl=64 time=0.039 ms
+64 bytes from 192.168.5.24: icmp_seq=27 ttl=64 time=0.038 ms
+64 bytes from 192.168.5.24: icmp_seq=28 ttl=64 time=0.039 ms
+64 bytes from 192.168.5.24: icmp_seq=29 ttl=64 time=0.037 ms
+64 bytes from 192.168.5.24: icmp_seq=30 ttl=64 time=0.038 ms
+
+
+c502@comp:~$ sudo ifdown -a
+
+c502@comp:~$ ping 192.168.5.24
+PING 192.168.5.24 (192.168.5.24) 56(84) bytes of data.
+
+c502@comp:~$ traceroute
+Usage:
+  traceroute [ -46dFITnreAUDV ] [ -f first_ttl ] [ -g gate,... ] [ -i device ] [ -m max_ttl ] [ -N squeries ] [ -p port ] [ -t tos ] [ -l flow_label ] [ -w waittime ] [ -q nqueries ] [ -s src_addr ] [ -z sendwait ] [ --fwmark=num ] host [ packetlen ]
+Options:
+  -4                          Use IPv4
+  -6                          Use IPv6
+  -d  --debug                 Enable socket level debugging
+  -F  --dont-fragment         Do not fragment packets
+  -f first_ttl  --first=first_ttl
+                              Start from the first_ttl hop (instead from 1)
+  -g gate,...  --gateway=gate,...
+                              Route packets through the specified gateway
+                              (maximum 8 for IPv4 and 127 for IPv6)
+  -I  --icmp                  Use ICMP ECHO for tracerouting
+  -T  --tcp                   Use TCP SYN for tracerouting (default port is 80)
+  -i device  --interface=device
+                              Specify a network interface to operate with
+  -m max_ttl  --max-hops=max_ttl
+                              Set the max number of hops (max TTL to be
+                              reached). Default is 30
+  -N squeries  --sim-queries=squeries
+                              Set the number of probes to be tried
+                              simultaneously (default is 16)
+  -n                          Do not resolve IP addresses to their domain names
+  -p port  --port=port        Set the destination port to use. It is either
+                              initial udp port value for "default" method
+                              (incremented by each probe, default is 33434), or
+                              initial seq for "icmp" (incremented as well,
+                              default from 1), or some constant destination
+                              port for other methods (with default of 80 for
+                              "tcp", 53 for "udp", etc.)
+  -t tos  --tos=tos           Set the TOS (IPv4 type of service) or TC (IPv6
+                              traffic class) value for outgoing packets
+  -l flow_label  --flowlabel=flow_label
+                              Use specified flow_label for IPv6 packets
+  -w waittime  --wait=waittime
+                              Set the number of seconds to wait for response to
+                              a probe (default is 5.0). Non-integer (float
+                              point) values allowed too
+  -q nqueries  --queries=nqueries
+                              Set the number of probes per each hop. Default is
+                              3
+  -r                          Bypass the normal routing and send directly to a
+                              host on an attached network
+  -s src_addr  --source=src_addr
+                              Use source src_addr for outgoing packets
+  -z sendwait  --sendwait=sendwait
+                              Minimal time interval between probes (default 0).
+                              If the value is more than 10, then it specifies a
+                              number in milliseconds, else it is a number of
+                              seconds (float point values allowed too)
+  -e  --extensions            Show ICMP extensions (if present), including MPLS
+  -A  --as-path-lookups       Perform AS path lookups in routing registries and
+                              print results directly after the corresponding
+                              addresses
+  -M name  --module=name      Use specified module (either builtin or external)
+                              for traceroute operations. Most methods have
+                              their shortcuts (`-I' means `-M icmp' etc.)
+  -O OPTS,...  --options=OPTS,...
+                              Use module-specific option OPTS for the
+                              traceroute module. Several OPTS allowed,
+                              separated by comma. If OPTS is "help", print info
+                              about available options
+  --sport=num                 Use source port num for outgoing packets. Implies
+                              `-N 1'
+  --fwmark=num                Set firewall mark for outgoing packets
+  -U  --udp                   Use UDP to particular port for tracerouting
+                              (instead of increasing the port per each probe),
+                              default port is 53
+  -UL                         Use UDPLITE for tracerouting (default dest port
+                              is 53)
+  -D  --dccp                  Use DCCP Request for tracerouting (default port
+                              is 33434)
+  -P prot  --protocol=prot    Use raw packet of protocol prot for tracerouting
+  --mtu                       Discover MTU along the path being traced. Implies
+                              `-F -N 1'
+  --back                      Guess the number of hops in the backward path and
+                              print if it differs
+  -V  --version               Print version info and exit
+  --help                      Read this help and exit
+
+Arguments:
++     host          The host to traceroute to
+      packetlen     The full packet length (default is the length of an IP
+                    header plus 40). Can be ignored or increased to a minimal
+                    allowed value
+
+c502@comp:~$ tracepath somaiya.edu
+ 1?: [LOCALHOST]                                         pmtu 1500
+ 1:  192.168.5.1                                           2.156ms 
+ 1:  192.168.5.1                                           2.170ms 
+ 2:  192.168.3.5                                           0.360ms 
